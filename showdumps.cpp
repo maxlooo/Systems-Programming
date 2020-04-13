@@ -1,4 +1,5 @@
-/* This program was run on Visual Studio Community 2017
+/* 
+This program was run on Visual Studio Community 2017
 */
 #include <tchar.h>
 #include <stdio.h>
@@ -7,14 +8,14 @@
 #include <windows.h>
 #include <strsafe.h>
 
+// create longer path than MAX_PATH
 #define EXTENDEDPATH 1024
 
 void DumpModule();
 void DumpEnvStrings();
 void DumpCommandLine();
 
-extern "C" const IMAGE_DOS_HEADER __ImageBase;
-
+// get address of current module hModule
 void DumpModule() {
 	HMODULE hModule = NULL;
 	GetModuleHandleEx(
@@ -24,6 +25,7 @@ void DumpModule() {
 	_tprintf(TEXT("Using GetModuleHandleEx for DumpModule = 0x%x\r\n"), hModule);
 }
 
+// parse and extract environment strings
 void DumpEnvStrings() {
 	PTSTR pEnvBlock = GetEnvironmentStrings();
 	TCHAR szName[EXTENDEDPATH];
@@ -71,6 +73,7 @@ void DumpEnvStrings() {
 	printf("MAX_PATH = %d\r\n", MAX_PATH);
 }
 
+// extract and print command line
 void DumpCommandLine() {
 	PTSTR CommandLine = GetCommandLine();
 
